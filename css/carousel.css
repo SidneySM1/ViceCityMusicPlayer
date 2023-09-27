@@ -1,0 +1,69 @@
+.carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 350px;
+    height: 100px;
+    margin: 0 auto;
+    justify-content: flex-end;
+  }
+
+  .carousel img {
+    max-width: 200px;
+    max-height: 50px;
+    margin-top: auto;
+    /* Empurra a imagem para o final da div verticalmente */
+    margin-left: auto;
+    /* Centraliza a imagem horizontalmente */
+    margin-right: auto;
+    /* Centraliza a imagem horizontalmente */
+    display: block;
+    /* Isso ajuda a centralizar a imagem horizontalmente */
+  }
+  @media screen and (max-width: 769px) {
+
+  }
+
+  .carousel-item {
+    position: relative;
+  }
+
+  .radio-info {
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+
+  .carousel-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .carousel-controls button {
+    background-color: black;
+    color: #F07FFF;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+
+  .carousel-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+  }
+
+  .carousel-next {
+
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }

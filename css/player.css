@@ -1,0 +1,277 @@
+.player {
+    height: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url('../card2.png');
+    max-width: 400px;
+    border-radius: 15px;
+    transition: all 0.25s linear;
+    /* Adicione a transição para todos os atributos */
+    filter: grayscale(0%);
+    /* Inicialmente, sem escala de cinza */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    justify-content: flex-end;
+  }
+
+  /* Aplica o efeito hover apenas em telas maiores do que 768 pixels de largura (ajuste conforme necessário) */
+  @media screen and (min-width: 769px) {
+    .player:hover {
+      filter: grayscale(35%);
+      /* Aplica escala de cinza no hover */
+      transition: all 0.25s linear;
+      /* Adicione a transição para todos os atributos */
+    }
+    
+  }
+  @media screen and (max-width: 769px) {
+    .player {
+    height: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url('../card2.png');
+    max-width: 340px;
+    border-radius: 15px;
+    transition: all 0.25s linear;
+    /* Adicione a transição para todos os atributos */
+    filter: grayscale(0%);
+    /* Inicialmente, sem escala de cinza */
+  }
+  }
+
+
+
+
+
+
+  .details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+    display: inline-block;
+    /* Permite que "Music" fique na mesma linha */
+    vertical-align: 2px;
+    /* Centraliza verticalmente 2 pixels abaixo */
+  }
+
+  .track-art {
+
+    margin: 25px;
+    height: 250px;
+    width: 250px;
+    background-image: url("../radios/Flash FM/1.jpg");
+    background-size: cover;
+    border-radius: 15%;
+    border: 10px solid #F07FFF;
+    box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 1), inset 3px 3px 5px rgba(0, 0, 0, 0.5);
+    /* Combinação de sombra preta e sombra interna */
+
+  }
+
+  .now-playing {
+    font-size: 1rem;
+  }
+
+  .track-name {
+    font-size: 3rem;
+  }
+
+  .track-artist {
+    font-size: 1.5rem;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .playpause-track,
+  .prev-track,
+  .next-track {
+    padding: 25px;
+    opacity: 0.8;
+
+    /* Smoothly transition the opacity */
+    transition: opacity .2s;
+  }
+
+  .playpause-track:hover,
+  .prev-track:hover,
+  .next-track:hover {
+    opacity: 1.0;
+  }
+
+  .slider_container {
+    width: 75%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  /* Modify the appearance of the slider */
+  .seek_slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: rgb(23, 149, 252);
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border: 1px solid rgb(23, 149, 252);
+    /* Adicione uma borda na cor da barra */
+    box-shadow: 0 0 5px rgba(108, 194, 252, 0.7);
+    /* Adicione um efeito de brilho suave */
+  }
+
+
+  .volume_slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: #F07FFF;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  /* Modify the appearance of the slider thumb */
+  .seek_slider::-webkit-slider-thumb,
+  .volume_slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: white;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .seek_slider:hover,
+  .volume_slider:hover {
+    opacity: 1.0;
+  }
+
+  .seek_slider {
+    width: 60%;
+
+  }
+
+  .volume_slider {
+    width: 30%;
+  }
+
+  .current-time,
+  .total-duration {
+    padding: 10px;
+    font-family: 'pricedown', sans-serif;
+    color: rgb(23, 149, 252);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 3);
+  }
+
+  i.fa-volume-down,
+  i.fa-volume-up {
+    padding: 10px;
+  }
+
+  i.fa-play-circle,
+  i.fa-pause-circle,
+  i.fa-step-forward,
+  i.fa-step-backward {
+    cursor: pointer;
+  }
+
+
+  @font-face {
+    font-family: 'GuldScript_PersonalUseOnly';
+    src: url('../font_face/GuldScript_PersonalUseOnly.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'pricedown';
+    src: url('../font_face/pricedown_bl.otf') format('opentype');
+  }
+
+
+
+  .vicetext {
+    font-family: 'GuldScript_PersonalUseOnly', sans-serif;
+    margin: 0;
+    text-align: left !important;
+    color: #F07FFF;
+    float: left;
+    /* Alinha "Now Playing" à esquerda */
+    position: relative;
+    /* Adicione esta linha */
+    z-index: 1;
+    /* Garante que o texto vicetext esteja acima do music-title */
+    font-size: 1.5rem;
+  }
+
+  .music-title {
+    display: inline-block;
+    vertical-align: -50px;
+    margin: 0;
+    font-family: 'pricedown', sans-serif;
+    color: rgb(23, 149, 252);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 3);
+    font-size: 1.1rem;
+    position: relative;
+    top: -30px;
+    z-index: 2;
+    white-space: nowrap;
+    /* Impede que o texto quebre para a próxima linha */
+    overflow: hidden;
+    /* Oculta qualquer conteúdo que não caiba na largura */
+    text-overflow: ellipsis;
+    /* Mostra "..." quando o texto estiver cortado */
+    max-width: 280px;
+    /* Defina um valor máximo para a largura do título */
+    transition: max-width 0.3s ease;
+    /* Adicione uma transição suave para animação */
+  }
+
+  .music-title:hover {
+    max-width: none;
+    /* Remova o limite máximo na largura ao passar o mouse */
+  }
+
+  @media screen and (max-width: 769px) {
+    .music-title {
+      display: inline-block;
+      vertical-align: -50px;
+      margin: 0;
+      font-family: 'pricedown', sans-serif;
+      color: rgb(23, 149, 252);
+      text-shadow: 1px 1px 0px rgba(0, 0, 0, 3);
+      font-size: 1.1rem;
+      position: relative;
+      top: -30px;
+      z-index: 2;
+      white-space: nowrap;
+      /* Impede que o texto quebre para a próxima linha */
+      overflow: hidden;
+      /* Oculta qualquer conteúdo que não caiba na largura */
+      text-overflow: ellipsis;
+      /* Mostra "..." quando o texto estiver cortado */
+      max-width: 200px;
+      /* Defina um valor máximo para a largura do título */
+      transition: max-width 0.3s ease;
+      /* Adicione uma transição suave para animação */
+    }
+  }

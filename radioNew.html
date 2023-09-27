@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Rádio</title>
+</head>
+<body>
+    <h1>Adicionar Rádio</h1>
+    <form action="scripts/radioNewInsert.php" method="POST" enctype="multipart/form-data">
+        <label for="nome">Nome da Rádio:</label>
+        <input type="text" name="nome" required>
+        
+        <label for="descricao">Descrição:</label>
+        <textarea name="descricao"></textarea>
+        
+        <label for="logo">logo:</label>
+        <input type="file" name="logo" accept="image/*" required>
+
+        <label for="imagem">Imagem:</label>
+        <input type="file" name="imagem" accept="image/*" required>
+        
+        <button type="submit">Adicionar Rádio</button>
+    </form>
+
+    <h1>Listar Rádios</h1>
+    
+    <ul id="radios-list">
+        <!-- Aqui será preenchida a lista de rádios com JavaScript -->
+    </ul>
+    
+    <script>
+        // Função para listar as rádios a partir de uma consulta MySQL
+        function listarRadios() {
+            var radiosList = document.getElementById("radios-list");
+    
+            // Limpar a lista de rádios
+            radiosList.innerHTML = "";
+    
+            // Função para criar o formulário de adicionar músicas
+            function criarFormularioAdicionarMusicas(idRadio) {
+                var form = document.createElement("form");
+                form.action = "scripts/radioAddMusic.php";
+                form.method = "POST";
+                form.enctype = "multipart/form-data";
+    
+                var label = document.createElement("label");
+                label.textContent = "Selecionar Músicas:";
+                var input = document.createElement("input");
+                input.type = "file";
+                input.name = "musicas[]";
+                input.accept = "audio/mpeg";
+                input.multiple = true;
+                input.required = true;
+    
+                var radioIdInput = document.createElement("input");
+                radioIdInput.type = "hidden";
+                radioIdInput.name = "radio_id";
+                radioIdInput.value = idRadio;
+    
+                var button = document.createElement("button");
+                button.type = "submit";
+                button.textContent = "Adicionar Músicas";
+    
+                form.appendChild(label);
+                form.appendChild(input);
+                form.appendChild(radioIdInput);
+                form.appendChild(button);
+    
+                return form;
+            }
+    
+            // Fazer uma solicitação AJAX para buscar os dados das rádios
+            fetch("scripts/radiosList.php")
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Preencher a lista com os dados das rádios
+                    data.forEach(function (radio) {
+                        var li = document.createElement("li");
+                        li.innerHTML =
+                            "<strong>Nome:</strong> " + radio.nome + " | " +
+                            "<strong>Descrição:</strong> " + radio.descricao + " | " +
+                            "<strong>Imagem:</strong> <img src='" + radio.imagem + "' width='100px'> | " +
+                            "<button onclick='excluirRadio(" + radio.id + ", \"" + radio.diretorio + "\")'>Excluir</button>";
+    
+                        // Adicionar o formulário de adicionar músicas ao elemento li
+                        var formularioMusicas = criarFormularioAdicionarMusicas(radio.id);
+                        li.appendChild(formularioMusicas);
+    
+                        radiosList.appendChild(li);
+                    });
+                })
+                .catch(function(error) {
+                    console.error("Erro ao buscar os dados das rádios: " + error);
+                });
+        }
+    
+        // Função para excluir uma rádio (será tratada pelo PHP)
+        function excluirRadio(id, diretorio) {
+            // Redirecionar para a página PHP que cuidará da exclusão
+            window.location.href = "scripts/radioDelete.php?id=" + id + "&diretorio=" + diretorio;
+        }
+    
+        // Chamar a função para listar as rádios quando a página carregar
+        listarRadios();
+    </script>
+    
+</body>
+</html>

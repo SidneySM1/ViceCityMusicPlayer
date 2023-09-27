@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Music Player</title>
+  <!-- Load FontAwesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Link para o jQuery 3.7.1 via CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="css/player.css">
+  <link rel="stylesheet" href="css/carousel.css">
+
+  <!-- CSS style -->
+  <style>
+    body {
+      background-color: lightgreen;
+      background-image: url('2.png');
+    }
+
+
+    /* Estilo para a navbar com fundo quase transparente */
+    .navbar-custom {
+      
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar-custom {
+        background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(241, 138, 255, 0.2) !important;
+      color: white !important;
+      font-size: 30px;
+      border: 4px solid #F07FFF;
+      /* Adiciona a sombra externa abaixo e à direita */
+      box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 1), inset 3px 3px 5px rgba(0, 0, 0, 0.5);
+      /* Combinação de sombra preta e sombra interna */
+
+      border-radius: 15px;
+      }
+    }
+
+    /* Estilo para o texto dos links (nav-link) */
+    .navbar-custom .navbar-nav .nav-link {
+      color: white !important;
+      /* Cor do texto branco */
+      text-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 1);
+      font-family: 'GuldScript_PersonalUseOnly', sans-serif;
+    }
+
+    /* Estilo para os textos dos links (nav-link) */
+    .navbar-custom .navbar-nav .nav-link {
+      color: white !important;
+      transition: text-shadow 0.3s ease;
+      /* Adicione uma transição suave para o text-shadow */
+    }
+
+    /* Estilo de hover para os textos dos links com sombra na fonte */
+    .navbar-custom .navbar-nav .nav-link:hover {
+      text-shadow: 1px 1px 0px rgba(0, 0, 0, 3);
+      /* Efeito de text-shadow mais próximo ao texto */
+    }
+
+    .custom-toggler .navbar-toggler-icon {
+      color: white !important;
+      /* Cor do texto branco */
+    }
+
+    @media (max-width: 768px) {
+      .navbar-custom .navbar-nav .nav-link {
+        font-size: 16px;
+        /* Tamanho de fonte menor para telas pequenas */
+        text-align: center;
+      }
+    }
+
+
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white !important;
+      text-shadow: 1px 1px 0px rgba(0, 0, 0, 3);
+      font-size: 16px;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      margin-top: 20px;
+      height: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        position: sticky;
+
+      }
+    }
+
+
+    .text-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .img-custom {
+      height: 130px;
+    }
+
+    @media (max-width: 768px) {
+      .img-custom {
+        height: 80px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .container-custom {
+        height: 100px;
+      }
+    }
+
+
+
+    .hora {
+      color: rgb(23, 149, 252);
+      font-family: 'pricedown', sans-serif;
+      font-size: 2em;
+      -webkit-text-stroke: 1.5px black;
+      /* Adiciona uma borda preta nas letras */
+      /* Adiciona uma borda preta nas letras */
+      margin: 0;
+      line-height: 1;
+      /* Ajusta o espaçamento vertical */
+      user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+    }
+    .hora:hover{
+      transform: scale(1.1);
+    }
+
+    .valor {
+      color: rgb(63, 175, 63);
+      font-family: 'pricedown', sans-serif;
+      font-size: 2em;
+      -webkit-text-stroke: 1.5px black;
+      /* Adiciona uma borda preta nas letras */
+      /* Adiciona uma borda preta nas letras */
+      margin: 0;
+      line-height: 1;
+      /* Ajusta o espaçamento vertical */
+      user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+    }
+    .valor:hover{
+      transform: scale(1.1);
+    }
+
+    .like {
+      color: #F07FFF;
+      font-family: 'pricedown', sans-serif;
+      font-size: 2em;
+      -webkit-text-stroke: 1.5px black;
+      /* Adiciona uma borda preta nas letras */
+      margin: 0;
+      line-height: 1;
+      /* Ajusta o espaçamento vertical */
+      user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+
+    }
+    .like:hover {
+            transform: scale(1.1);
+        }
+
+    .icon-custom {
+      -webkit-text-stroke: 1.5px black;
+      /* Adiciona uma borda preta nas letras */
+      font-size: 1.2vw
+    }
+
+    
+    
+.valor, .hora, .like {
+    font-size: 1.8vw; /* Tamanho da fonte em relação à largura da viewport */
+}
+@media (max-width: 768px) {
+      .like {
+        font-size: 1.2em;
+      }
+      .icon-custom{
+        font-size: 0.8em
+      }
+      .valor{
+        font-size: 1.2em;
+      }
+      .hora{
+        font-size: 1.2em;
+      }
+      .hora, .valor, .like {
+        text-align: right; /* Alinhe à esquerda em telas menores */
+    }
+    }
+     /* Estilos para esconder os itens do menu em telas pequenas */
+     @media (max-width: 768px) {
+            .navbar-custom .navbar-toggler {
+                display: none; /* Esconde o botão toggle em telas menores */
+            }
+            .navbar-custom .navbar-collapse {
+                flex-direction: row; /* Altera a direção da flexbox para mostrar os itens do menu na mesma linha */
+                justify-content: flex-end; /* Alinha os itens do menu à direita */
+            }
+            .navbar-custom .navbar-nav {
+                margin-top: 0; /* Remove a margem superior */
+            }
+        }
+        /* Remova a borda do botão toggle */
+.navbar-toggler {
+    border: none;
+}
+
+/* Defina a imagem como plano de fundo do botão toggle */
+.navbar-toggler-icon {
+    background-image: url('toggle.png');
+    background-size: contain;
+    width: 70px;
+    height: 70px;
+}
+
+/* Remova o preenchimento do botão toggle */
+.navbar-toggler:focus {
+    outline: none;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container mt-2 container-custom">
+    <div class="row align-items-center justify-content-between">
+        <!-- Logo (col-4) -->
+        <div class="col-5 col-md-3">
+            <a href="#"><img class="img-fluid img-custom" src="logo2.png" alt="Logo"></a>
+        </div>
+        <!-- Barra de Navegação Responsiva (col-8) -->
+        <!-- Container à direita do navbar -->
+        <div class="container col-3 col-md-1 offset-md-6 offset-1 mt-2 p-0 p-md-1 p-lg-2">
+            <div class="row d-flex flex-column">
+                <div class="col">
+                    <!-- Hora -->
+                    <p id="hora" class="hora" style="text-align: right;">00:00</p>
+                </div>
+                <div class="col">
+                    <!-- Valor -->
+                    <p class="valor" style="text-align: right;">$123</p>
+                </div>
+                <div class="col">
+                    <!-- Like -->
+                    <p id="like-button" class="like" style="text-align: right;" onclick="likeOrUnlike()">
+                        <i class="far fa-heart icon-custom"></i> <span id="like-count">100</span>
+                    </p>          
+                </div>
+            </div>
+        </div>
+        <div class="col-3 col-md-2 p-0">
+            <nav class="navbar navbar-expand-lg navbar-custom">
+                <!-- Botão de toggle personalizado para telas pequenas -->
+                <button class="navbar-toggler d-block d-lg-none toggle-custom" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <img id="customNavbarToggle" style="height: 70px; margin: 0;" src="toggle.png" alt="Toggle Navigation">
+              </button>
+                <!-- Itens do Menu (centralizados) -->
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">PlayList</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="carousel">
+    <div class="carousel-inner">
+      <!-- Os itens do carrossel serão adicionados dinamicamente aqui -->
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-prev" id="prevButton"><i class="fas fa-angle-left"></i></button>
+      <p class="radio-info" id="radio-info"></p>
+      <button class="carousel-next" id="nextButton"><i class="fas fa-angle-right"></i></button>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="player">
+    <!-- Carrossel de Rádios -->
+    <div class="details">
+      <h2 class="vicetext">Now Playing</h2>
+      <div class="now-playing music-title">Music</div>
+
+    </div>
+    <div id="trackArt" class="track-art"></div>
+    <div class="slider_container neon">
+      <div class="current-time">00:00</div>
+      <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+      <div class="total-duration">00:00</div>
+    </div>
+    <div class="buttons">
+      <div class="prev-track" onclick="prevTrack()"><i class="fa fa-step-backward fa-2x"></i></div>
+      <div class="playpause-track" id="playpauseButton" onclick="playpauseTrack()"><i
+          class="fa fa-play-circle fa-5x"></i></div>
+      <div class="next-track" onclick="nextTrack()"><i class="fa fa-step-forward fa-2x"></i></div>
+    </div>
+
+    <div class="slider_container">
+      <i class="fa fa-volume-down"></i>
+      <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
+      <i class="fa fa-volume-up"></i>
+    </div>
+  </div>
+
+
+
+
+
+  <footer class="footer">
+    © 2023 SV projeto RadioViceCity
+  </footer>
+
+  <!-- Main script for the player -->
+  <script>
+    let now_playing = document.querySelector(".now-playing");
+    let track_art = document.querySelector(".track-art");
+    //let track_name = document.querySelector(".track-name");
+    //let track_artist = document.querySelector(".track-artist");
+
+    let playpause_btn = document.querySelector(".playpause-track");
+    let next_btn = document.querySelector(".next-track");
+    let prev_btn = document.querySelector(".prev-track");
+
+    let seek_slider = document.querySelector(".seek_slider");
+    let volume_slider = document.querySelector(".volume_slider");
+    let curr_time = document.querySelector(".current-time");
+    let total_duration = document.querySelector(".total-duration");
+
+    let track_index = 0;
+    let isPlaying = false;
+    let updateTimer;
+
+    let currentPosition = 0;
+    let backgroundInterval;
+    let speed = 3;
+
+    // Create new audio element
+    let curr_track = document.createElement('audio');
+
+    let track_list = []; // Inicializa a lista de faixas vazia
+
+    // Fetch data from radiosList.php
+    fetch('scripts/radiosList.php')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        radios = data; // Armazene os dados das rádios no array radios
+        showRadioInfo(); // Exiba a primeira rádio
+        updateCarousel(); // Atualize o carrossel
+
+        // Chame a função changeRadio com o ID da rádio inicial após obter os dados das rádios
+        changeRadio(radios[currentIndex].id);
+      })
+      .catch(function (error) {
+        console.error('Erro ao carregar os dados das rádios: ' + error);
+      });
+
+
+
+    function atualizarHora() {
+      const horaElement = document.getElementById('hora');
+      const agora = new Date();
+      const hora = agora.getHours().toString().padStart(2, '0');
+      const minutos = agora.getMinutes().toString().padStart(2, '0');
+      const horaFormatada = `${hora}:${minutos}`;
+      horaElement.textContent = horaFormatada;
+
+      // Chama a função novamente na próxima renderização
+      requestAnimationFrame(atualizarHora);
+    }
+
+    // Inicializa a atualização da hora
+    atualizarHora();
+
+
+
+
+
+    var radios = []; // Vamos armazenar os dados das rádios aqui.
+    var currentIndex = 0;
+    var radioInfo = document.getElementById('radio-info');
+    var prevButton = document.getElementById('prevButton');
+    var nextButton = document.getElementById('nextButton');
+    let radioId = 0;
+
+    function showRadioInfo() {
+      var currentRadio = radios[currentIndex];
+      //radioInfo.textContent = 'Rádio Selecionada: ' + currentRadio.nome + ', ID: ' + currentRadio.id;
+      radioId = currentRadio.id;
+
+      // Verifique se o elemento trackArt existe
+      var trackArtElement = document.querySelector('.track-art');
+      if (trackArtElement) {
+        // Altere o background-image da classe track-art
+        trackArtElement.style.backgroundImage = 'url("' + currentRadio.imagem + '")';
+      }
+    }
+
+    function nextRadio() {
+      currentIndex = (currentIndex + 1) % radios.length;
+      updateCarousel();
+      showRadioInfo();
+      pauseTrack();
+      updatePlayPauseButton();
+    }
+
+    function prevRadio() {
+      currentIndex = (currentIndex - 1 + radios.length) % radios.length;
+      updateCarousel();
+      showRadioInfo();
+      pauseTrack();
+      updatePlayPauseButton();
+    }
+
+    function updateCarousel() {
+      var carouselInner = document.querySelector('.carousel-inner');
+      carouselInner.innerHTML = '';
+
+      radios.forEach(function (radio, index) {
+        var item = document.createElement('div');
+        item.classList.add('carousel-item');
+        if (index === currentIndex) {
+          item.classList.add('active');
+        }
+
+        var img = document.createElement('img');
+        img.src = radio.logo;
+        img.alt = radio.nome;
+
+        item.appendChild(img);
+        carouselInner.appendChild(item);
+      });
+    }
+
+    // Fetch data from radiosList.php
+    fetch('scripts/radiosList.php')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        radios = data; // Armazene os dados das rádios no array radios
+        showRadioInfo(); // Exiba a primeira rádio
+        updateCarousel(); // Atualize o carrossel
+      })
+      .catch(function (error) {
+        console.error('Erro ao carregar os dados das rádios: ' + error);
+      });
+
+    // Adicione event listeners aos botões
+    prevButton.addEventListener('click', function () {
+      prevRadio();
+      changeRadio(radioId); // Chame a função changeRadio com o ID da nova rádio
+    });
+
+    nextButton.addEventListener('click', function () {
+      nextRadio();
+      changeRadio(radioId); // Chame a função changeRadio com o ID da nova rádio
+    });
+    // Função para gerar um índice aleatório entre 0 e o número de rádios
+    function getRandomIndex() {
+      return Math.floor(Math.random() * radios.length);
+    }
+
+    // Chame getRandomIndex() para definir o índice inicial aleatório
+    currentIndex = getRandomIndex();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Função para carregar uma nova música
+    function loadTrack(track_index) {
+      clearInterval(updateTimer);
+      resetValues();
+
+      // Load a new track
+      curr_track.src = track_list[track_index].path;
+      curr_track.load();
+
+      now_playing.textContent = (track_list[track_index].artist) + " - " + (track_list[track_index].name);
+
+      // Set an interval of 1000 milliseconds for updating the seek slider
+      updateTimer = setInterval(seekUpdate, 1000);
+
+      // Move to the next track if the current one finishes playing
+      curr_track.addEventListener("ended", nextTrack);
+    }
+
+    function loadRadioAndMusic(radioId) {
+      // Fazer uma solicitação AJAX para buscar a lista de músicas do servidor para a rádio atual
+      fetch("scripts/radioMusicList.php?radio_id=" + radioId)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          // Preencher a lista de faixas com os dados recebidos do servidor
+          track_list = data;
+          // Agora, track_list contém a lista de músicas no formato esperado
+
+          // Carregar a primeira música da lista
+          loadTrack(0);
+        })
+        .catch(function (error) {
+          console.error("Erro ao buscar a lista de músicas: " + error);
+        });
+    }
+
+    // Função para trocar de rádio
+    function changeRadio(radioId) {
+      // Chame a função para carregar a rádio e as músicas correspondentes
+      loadRadioAndMusic(radioId);
+    }
+
+
+    // Reset Values
+    function resetValues() {
+      curr_time.textContent = "00:00";
+      total_duration.textContent = "00:00";
+      seek_slider.value = 0;
+    }
+
+
+
+    function playTrack() {
+      curr_track.play();
+      isPlaying = true;
+      moveBackground();
+
+      // Replace icon with the pause icon
+      playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+    }
+
+
+
+    function pauseTrack() {
+      isPlaying = false;
+      fadeOutAudio(curr_track);
+
+      decelerateBackground(); // Chama a função para desacelerar o background gradualmente
+
+    }
+
+    function fadeOutAudio(audio) {
+      if (audio) {
+        let audio2 = audio.volume;
+        const fadeInterval = setInterval(() => {
+          if (audio.volume > 0.01) {
+            audio.volume -= 0.01; // Ajuste o valor conforme necessário
+          } else {
+            audio.volume = 0;
+            clearInterval(fadeInterval);
+            audio.pause();
+            audio.volume = audio2;
+          }
+        }, 5); // Ajuste o intervalo de tempo conforme necessário
+      }
+    }
+
+
+    function nextTrack() {
+      if (track_index < track_list.length - 1)
+        track_index += 1;
+      else track_index = 0;
+      loadTrack(track_index);
+      playTrack();
+    }
+
+    function prevTrack() {
+      if (track_index > 0)
+        track_index -= 1;
+      else track_index = track_list.length;
+      loadTrack(track_index);
+      playTrack();
+    }
+
+    function seekTo() {
+      let seekPosition = seek_slider.value;
+      let newTime = (seekPosition / 100) * curr_track.duration;
+
+      // Verifique se o seek é para frente ou para trás
+      if (newTime > curr_track.currentTime) {
+        // Seek para uma posição avançada
+        speed = 30; // Altera a velocidade para 10
+        setTimeout(function () {
+          speed = 3; // Altera a velocidade para 3 após 3 segundos
+        }, 1000);
+      } else {
+        // Seek para uma posição avançada
+        speed = -30; // Altera a velocidade para 10
+        setTimeout(function () {
+          speed = 3; // Altera a velocidade para 3 após 3 segundos
+        }, 1000);
+      }
+
+      curr_track.currentTime = newTime;
+    }
+
+    function setVolume() {
+      curr_track.volume = volume_slider.value / 100;
+    }
+
+    function seekUpdate() {
+      let seekPosition = 0;
+
+      // Check if the current track duration is a legible number
+      if (!isNaN(curr_track.duration)) {
+        seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+        seek_slider.value = seekPosition;
+
+        // Calculate the time left and the total duration
+        let currentMinutes = Math.floor(curr_track.currentTime / 60);
+        let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+        let durationMinutes = Math.floor(curr_track.duration / 60);
+        let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+
+        // Adding a zero to the single digit time values
+        if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
+        if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
+        if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
+        if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+
+        curr_time.textContent = currentMinutes + ":" + currentSeconds;
+        total_duration.textContent = durationMinutes + ":" + durationSeconds;
+      }
+    }
+
+    // Load the first track in the tracklist
+    //loadTrack(track_index);
+    //nextTrack();
+
+    function moveBackground() {
+      speed = 3;
+      if (isPlaying && !backgroundInterval) {
+        backgroundInterval = setInterval(function () {
+          const body = document.body;
+          currentPosition -= speed; // Ajuste o valor negativo para controlar a direção do movimento
+          body.style.backgroundPositionX = currentPosition + 'px';
+
+        }, 30); // Ajuste o intervalo conforme necessário
+      } else if (!isPlaying && backgroundInterval) {
+        clearInterval(backgroundInterval);
+        backgroundInterval = null;
+      }
+    }
+    function pauseBackground() {
+      if (backgroundInterval) {
+        clearInterval(backgroundInterval);
+        backgroundInterval = null;
+      }
+    }
+    function updatePlayPauseButton() {
+      if (isPlaying) {
+        playpauseButton.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+      } else {
+        playpauseButton.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+      }
+    }
+    function playpauseTrack() {
+      if (!isPlaying) {
+        playTrack();
+      } else {
+        pauseTrack();
+      }
+      updatePlayPauseButton(); // Atualize o botão após tocar ou pausar a música
+    }
+
+    // Função para desacelerar o movimento do background gradualmente
+    function decelerateBackground() {
+      if (backgroundInterval) {
+        const decelerationRate = 0.1; // Ajuste a taxa de desaceleração conforme necessário
+        const minSpeed = 1; // Ajuste a velocidade mínima conforme necessário
+        clearInterval(backgroundInterval);
+        backgroundInterval = setInterval(function () {
+          const body = document.body;
+          currentPosition -= speed;
+          if (speed > minSpeed) {
+            speed -= decelerationRate;
+          }
+          body.style.backgroundPositionX = currentPosition + 'px';
+          if (speed <= minSpeed) {
+            clearInterval(backgroundInterval);
+            backgroundInterval = null;
+          }
+        }, 20); // Ajuste o intervalo conforme necessário
+      }
+    }
+
+
+    //script Jquery
+    function likeOrUnlike() {
+  // Obtenha o elemento do botão de "like"
+  let likeButton = document.getElementById("like-button");
+
+  // Verifique se o ícone atual é "far fa-heart" (indicando que o usuário ainda não curtiu)
+  if (likeButton.querySelector("i").classList.contains("far")) {
+    // O usuário está prestes a curtir, altere o ícone e adicione a curtida
+    likeButton.querySelector("i").classList.remove("far");
+    likeButton.querySelector("i").classList.add("fa");
+
+    // Chame o script PHP para adicionar a curtida (você pode usar AJAX ou Fetch aqui)
+    // Exemplo usando Fetch:
+    fetch("scripts/like.php")
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (data) {
+        // Exiba a mensagem de retorno do script PHP
+        //alert(data);
+        loadLikeCount();
+      })
+      .catch(function (error) {
+        console.error("Erro ao adicionar a curtida: " + error);
+      });
+  } else {
+    // O usuário já curtiu, então está prestes a remover a curtida, altere o ícone
+    likeButton.querySelector("i").classList.remove("fa");
+    likeButton.querySelector("i").classList.add("far");
+
+    // Chame o script PHP para remover a curtida (você pode usar AJAX ou Fetch aqui)
+    // Exemplo usando Fetch:
+    fetch("scripts/like.php")
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (data) {
+        // Exiba a mensagem de retorno do script PHP
+        //alert(data);
+        loadLikeCount();
+      })
+      .catch(function (error) {
+        console.error("Erro ao remover a curtida: " + error);
+      });
+  }
+}
+$(document).ready(function () {
+        // Use jQuery para fazer uma solicitação AJAX para o likeCheck.php
+        $.ajax({
+            type: "GET",
+            url: "scripts/likeCheck.php",
+            dataType: "json",
+            success: function (data) {
+                // Verifique o status de curtida no JSON retornado
+                if (data.curtiu) {
+                    // Se o usuário já curtiu, defina o ícone como um coração cheio
+                    
+                    $("#like-button i").removeClass("far fa-heart").addClass("fa fa-heart");
+                } else {
+                    // Se o usuário ainda não curtiu, deixe o ícone como um coração vazio
+                    
+                    $("#like-button i").removeClass("fa fa-heart").addClass("far fa-heart");
+                }
+            },
+            error: function (error) {
+                console.error("Erro ao verificar a curtida: " + JSON.stringify(error));
+            }
+            
+        });
+    });
+        // Função para carregar o número de curtidas
+        function loadLikeCount() {
+    fetch('scripts/likeCount.php')
+        .then(response => response.text())
+        .then(data => {
+            // Adicione zeros à esquerda para garantir pelo menos 3 dígitos
+            const paddedLikeCount = data.toString().padStart(3, '0');
+            
+            // Atualize o conteúdo do elemento com o número de curtidas
+            document.getElementById('like-count').textContent = paddedLikeCount;
+            
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o número de curtidas: ' + error);
+        });
+}
+
+    // Chama a função para carregar o número de curtidas ao carregar a página
+    document.addEventListener('DOMContentLoaded', function () {
+    loadLikeCount();
+});
+$(document).ready(function () {
+        $("#customNavbarToggle").click(function () {
+            $("#navbarNav").collapse("toggle");
+        });
+    });
+    // Captura o botão de toggle e a lista de menu
+    const toggleBtn = document.getElementById('toggleBtn');
+        const menu = document.getElementById('menu');
+
+        // Adiciona um evento de clique ao botão de toggle
+        toggleBtn.addEventListener('click', () => {
+            // Verifica se a lista de menu está visível
+            if (menu.style.display === 'block') {
+                // Se estiver visível, esconde a lista de menu
+                menu.style.display = 'none';
+            } else {
+                // Se estiver oculta, mostra a lista de menu
+                menu.style.display = 'block';
+            }
+        });
+  </script>
+  <!-- Link para o arquivo JavaScript do Bootstrap via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
