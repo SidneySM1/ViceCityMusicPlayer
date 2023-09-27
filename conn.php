@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "124679N@ruto";
 $dbname = "vicecityradio";
 
 // Criar uma conexão com o banco de dados
