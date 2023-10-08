@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: bold;
+    font: normal arial sans-serif;
+
+}
+
+.container {
+    color: white;   
+
+}
+.modal-title{
+    font-weight: bolder;
+}
+.modal {
+
+    color: red;
+}
+.modal-header{
+    border-bottom:none !important;
+}
+.modal-content {
+    background-image: url(OIG_3.jpeg);
+    background-repeat: no-repeat;
+
+
+}
+
+.modal-body .scrollable-list {
+    max-height: 190px;
+    /* Defina a altura máxima desejada */
+    overflow-y: auto;
+    /* Adicione uma barra de rolagem vertical quando necessário */
+}
+
+/* #radio1{
+    background-image: url(Volume\ 1\ Capa.png);
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+
+
+
+} */
+#radio1 li, #radio2 li , #radio3 li, #radio4 li, #radio5 li, #radio6 li, #radio7 li{
+    color: white ;
+    background: rgba(90, 80, 80, 0.274) ;
+    border: none;
+
+}
+
+
+.card {
+    display: block;
+    transition: all 0.3s ease ;
+    color: white !important;
+    background: none !important;
+}
+.card:hover{
+    letter-spacing: 0.5px;
+    color: #a361ef;
+}
+.card::after{
+    content: "";
+    display: block;
+    width: 0;
+    height: 4px;
+    border-radius: 200px;
+    background: rgba(236, 236, 236, 0.479);
+    transition: all 1s ease ;
+}
+.card:hover::after{
+    width: 100%;
+    
+}
+
+.transparent-list {
+    opacity: 0; /* Define a opacidade para tornar a UL transparente */
+    height: 0; /* Defina a altura como 0 para ocultar o conteúdo */
+    overflow: hidden; /* Oculte qualquer conteúdo que exceda a altura 0 */
+}
+.modal-footer{
+    border-top:none !important;
+}
+
+
+/* TESTE DE BARRA DE ROLAGEM */
+
+
+/* Define um estilo para a barra de rolagem */
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+    background-color: none; /* Cor de fundo da barra de rolagem */
+}
+
+/* Define um estilo para o botão da alça da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Cor da alça da barra de rolagem */
+    border-radius: 5px; /* Borda arredondada para a alça */
+}
+
+/* Define um estilo para a alça da barra de rolagem quando hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Cor da alça da barra de rolagem quando hover */
+}
+
